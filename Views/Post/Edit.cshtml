@@ -1,0 +1,113 @@
+﻿@model BlogManagement.Models.CreateEditPostVM
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_AdminLTE";
+
+}
+
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edit Post  </h3>
+        </div>
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="AuthorId" />
+                <input type="hidden" asp-for="CreatedAt" />
+                <input type="hidden" asp-for="ImagePath" />
+                <input type="hidden" asp-for="HotPost" />
+                <div class="form-group">
+                    <label asp-for="CategoriesId" class="control-label"></label>
+                    @Html.DropDownListFor(c => c.CategoriesId, new SelectList(Model.Categories, "Value", "Text"), "Select Category", new { @class = "form-control", multiple = "multiple" })
+                    <span asp-validation-for="CategoriesId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MetaTile" class="control-label"></label>
+                    <input asp-for="MetaTile" class="form-control" />
+                    <span asp-validation-for="MetaTile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Slug" class="control-label"></label>
+                    <input asp-for="Slug" class="form-control" />
+                    <span asp-validation-for="Slug" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Summary" class="control-label"></label>
+                    <input asp-for="Summary" class="form-control" />
+                    <span asp-validation-for="Summary" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div ass="col-md-10">
+                        @Html.TextAreaFor(model => model.Content, new { @id = "ckeditor", @class = "form-control", @rows = "200" })
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImagePath" class="control-label"></label>
+                    <hr />
+                    <img id="output" src="@Html.DisplayFor(model => model.ImagePath)" width="1000" height="280" class="img-fluid" alt="Responsive image">
+                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" asp-for="File" type="file" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" multiple>
+                        <label class="custom-file-label" for="inputGroupFile04">Select File</label>
+                        <span asp-validation-for="File" class="text-danger"></span>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Button</button>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (@User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault() == "Admin")
+    {
+        <div>
+            <a asp-action="Index" asp-controller="Post" class="btn btn-outline-dark"><i class="fas fa-chevron-left" aria-hidden="true"></i>Back to List</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a asp-action="ShowPostByIdBlogger" asp-controller="Post" class="btn btn-outline-dark"><i class="fas fa-chevron-left" aria-hidden="true"></i>Back to List</a>
+        </div>
+    }
+
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        CKEDITOR.replace("ckeditor");
+    </script>
+
+}

@@ -1,0 +1,30 @@
+﻿@model BlogManagement.Models.ShowCategoryPostVM
+<section class="section first-section">
+    <div class="container-fluid">
+        <div class="masonry-blog clearfix">
+            @foreach (ShowListPostVM item in Model.ListHostPost)
+            {
+                <div class="left-side">
+                    <div class="masonry-box post-media">
+                        <img src="@item.ImagePath" class="img-fluid">
+                        <div class="shadoweffect">
+                            <div class="shadow-desc">
+                                <div class="blog-meta">
+                                    <span class="bg-aqua"><a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" title="">Gardening</a></span>
+                                    <h4><a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" title="">@item.Title</a></h4>
+                                    <small><a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" title="">@item.CreatedAt.ToLongDateString()</a></small>
+                                    <small><a href="#" title="">@item.Users.Firstname</a></small>
+                                </div><!-- end meta -->
+                            </div><!-- end shadow-desc -->
+                        </div><!-- end shadow -->
+                    </div><!-- end post-media -->
+                </div><!-- end left-side -->
+            }
+
+
+
+
+
+        </div><!-- end masonry -->
+    </div>
+</section>

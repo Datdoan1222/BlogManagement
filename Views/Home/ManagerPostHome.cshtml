@@ -1,0 +1,128 @@
+﻿@model BlogManagement.Models.ManageHomePost
+
+@{
+    ViewData["Title"] = "Home Manage";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+@section Scripts{
+    <script src="~/js/JsChangeStatus.js"></script>
+    <script src="~/js/JsChangeStatusHotPost.js"></script>
+}
+<br />
+<br />
+<h4> Post Show Slide </h4>
+<div class="col-md-12">
+    <table  class="table">
+        <thead>
+            <tr>
+                <th>
+                    User
+                </th>
+                <th>
+                    Title
+                </th>
+
+                <th>
+                    Slug
+                </th>
+                <th>
+                    Published
+                </th>
+                <th>
+                    CreatedAt
+                </th>
+
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (PostVM item in Model.ListHotPost)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AuthorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        <a href="#" class="btn-active" data-id="@item.Id">@(item.Published? "True":"False")</a>
+                    </td>
+                    <td>
+                        @item.CreatedAt.ToShortDateString()
+                    </td>
+                    <td>
+                        <span class="badge badge-success"> @item.HotPost</span>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+<h4> All Post Show Slide </h4>
+<div class="col-md-12">
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+                <th>
+                    User
+                </th>
+                <th>
+                    Title
+                </th>
+
+                <th>
+                    Slug
+                </th>
+                <th>
+                    Published
+                </th>
+                <th>
+                    CreatedAt
+                </th>
+                <th>
+                    Hot Post
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var itempost in Model.ListAllPost)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => itempost.AuthorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => itempost.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => itempost.Slug)
+                    </td>
+                    <td>
+                        <a href="#" class="btn-active" data-id="@itempost.Id">@(itempost.Published? "True":"False")</a>
+                    </td>
+                    <td>
+                        @itempost.CreatedAt.ToShortDateString()
+                    </td>
+                    <td>
+                       <a href="#" class="btn btn-success btnhotpost" data-id="@itempost.Id">@(itempost.HotPost? "True":"False")</a>
+
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

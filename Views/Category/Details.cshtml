@@ -1,0 +1,94 @@
+﻿@model BlogManagement.Models.ShowAllChildCategoryVM
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+<div class="col-md-12">
+    <p>
+        <a asp-action="CreateChild" class="btn btn-success"><i class="fas fa-plus" aria-hidden="true"></i> Create Child New</a>
+    </p>
+    <div>
+        <h4>Category Parent</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.MetaTitle)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MetaTitle)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Slug)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Slug)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+        </dl>
+    </div>
+    <h4>Category Child</h4>
+    <hr />
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CategoryChild)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">
+                            <i class="fas fa-pen" aria-hidden="true"></i>
+                        </a>
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this record? ')">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.Id">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+        </a>
+        <a asp-action="Index" class="btn btn-outline-dark"><i class="fas fa-chevron-left" aria-hidden="true"></i>Back to List</a>
+    </div>
+</div>

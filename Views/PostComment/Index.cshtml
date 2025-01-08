@@ -1,0 +1,73 @@
+﻿@model IEnumerable<BlogManagement.Models.PostCommentVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+<div class="col-md-12">
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Published)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalVotes)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParentId)
+                    </td>
+                    <td>
+                        @if (item.Published)
+                        {
+                            <span class="badge badge-success"> True </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning"> False </span>
+
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalVotes)
+                    </td>
+                    <td>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this record? ')">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

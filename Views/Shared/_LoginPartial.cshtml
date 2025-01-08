@@ -1,0 +1,30 @@
+﻿@using BlogManagement.Data
+
+
+<ul class="nav nav-pills nav-sidebar flex-column >
+
+    <header id="header">
+
+        <div class="d-flex flex-column">
+
+            <div class="profile ">
+                <img src="@User.Claims.Where(c => c.Type == "ImagePath").Select(c => c.Value).FirstOrDefault()" alt="" class="img-fluid rounded-circle">
+                <h1 class="text-light text-center"><a href="index.html"</a> @User.Identity.Name</h1>
+
+            </div>
+
+    <li class="nav-item">
+        <form class="form-inline">
+            <button type="submit" class="nav-link btn btn-link text-white">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>@Html.ActionLink("Log Out", "Logout", "User")</p>
+            </button>
+        </form>
+    </li>
+    </div>
+    </header><!-- End Header -->
+
+
+
+
+</ul>

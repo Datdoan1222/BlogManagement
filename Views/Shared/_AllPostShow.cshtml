@@ -1,0 +1,89 @@
+﻿@model BlogManagement.Models.ShowCategoryPostVM
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+<div class="row">
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="page-wrapper">
+            <div class="blog-list clearfix">
+                @foreach (ShowListPostVM item in Model.ListPosts)
+                {
+                    <div class="blog-box row">
+                        <div class="col-md-4">
+                            <div class="post-media">
+                                <a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" title="">
+                                    <img src="@item.ImagePath" alt="" class="img-fluid">
+                                    <div class="hovereffect"></div>
+                                </a>
+                            </div><!-- end media -->
+                        </div><!-- end col -->
+
+                        <div class="blog-meta big-meta col-md-8">
+                            @*<span class="bg-aqua"><a href="garden-category.html" title="">@item.Categories.Title</a></span>*@
+                            <h4><a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" title="">@item.Title</a></h4>
+                            <p>@item.MetaTile</p>
+                            <small><a href="garden-category.html" title=""><i class="fa fa-eye"></i>@item.CreatedAt.Year</a></small>
+                            <small><a href="garden-single.html" title="">@item.CreatedAt.ToShortDateString()</a></small>
+                            <small><a href="#" title="">@item.Users.Firstname</a></small>
+                        </div><!-- end meta -->
+                    </div><!-- end blog-box -->
+                    <hr class="invis">
+
+                }
+
+
+
+            </div><!-- end blog-list -->
+        </div><!-- end page-wrapper -->
+
+        <hr class="invis">
+
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start">
+                        Trang @(Model.ListPosts.PageCount< Model.ListPosts.PageNumber ? 0 : Model.ListPosts.PageNumber) / @Model.ListPosts.PageCount
+
+                        @Html.PagedListPager(Model.ListPosts, page => Url.Action("Index", "Home",
+                            new { Page = page }))
+
+                    </ul>
+                </nav>
+            </div><!-- end col -->
+        </div><!-- end row -->
+    </div><!-- end col -->
+
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="sidebar">
+            <div class="widget">
+                <h2 class="widget-title">Recent Posts</h2>
+                <div class="blog-list-widget">
+                    <div class="list-group">
+                        @foreach (ShowListPostVM item in Model.ListHostPost)
+                        {
+                            <a asp-action="ShowPostById" asp-controller="Post" asp-route-id="@item.Id" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="w-100 justify-content-between">
+                                    <img src="@item.ImagePath" alt="" class="img-fluid float-left">
+                                    <h5 class="mb-1">@item.Title</h5>
+                                    <small>@item.CreatedAt.ToLongDateString()</small>
+                                </div>
+                            </a>
+                        }
+                        </div>
+                </div><!-- end blog-list -->
+            </div><!-- end widget -->
+
+            <div class="widget">
+                <h2 class="widget-title">Popular Categories</h2>
+                <div class="link-widget">
+                    <ul>
+                        <li><a  asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="1">Gardening <span>(21)</span></a></li>
+                        <li><a asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="2">Outdoor Living <span>(15)</span></a></li>
+                        <li><a asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="3">Indoor Living <span>(31)</span></a></li>
+                        <li><a asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="4">Shopping Guides <span>(22)</span></a></li>
+                        <li><a asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="5">Pool Design <span>(66)</span></a></li>
+                    </ul>
+                </div><!-- end link-widget -->
+            </div><!-- end widget -->
+        </div><!-- end sidebar -->
+    </div><!-- end col -->
+</div><!-- end row -->

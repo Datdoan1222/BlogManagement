@@ -1,0 +1,17 @@
+﻿<!-- section 1 -->
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_SlidesHotPost");
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+    @Html.Partial("_AllPostShow");
+
+</div><!-- end container -->
+<div class="dmtop">Scroll to Top</div>

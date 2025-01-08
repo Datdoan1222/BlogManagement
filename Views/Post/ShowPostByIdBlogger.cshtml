@@ -1,0 +1,90 @@
+﻿@model IEnumerable<BlogManagement.Models.PostVM>
+
+@{
+    ViewData["Title"] = "ShowPostByIdBlogger";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+
+<div class="col-md-12">
+    <br />
+    <p>
+        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus" aria-hidden="true"></i> Create New</a>
+    </p>
+    <br />
+    <br />
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Published)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th>
+                    Image Post
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HotPost)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td>
+                    @if (item.Published)
+                    {
+                        <span class="badge badge-success"> True </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning"> False </span>
+
+                    }
+                </td>
+                <td>
+                    @item.CreatedAt.ToShortDateString()
+                </td>
+                <td>
+                    <img src=@item.ImagePath width="50" height="50" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HotPost)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">
+                        <i class="fas fa-pen" aria-hidden="true"></i>
+                    </a>
+                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this record? ')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

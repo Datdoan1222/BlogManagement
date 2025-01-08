@@ -1,0 +1,246 @@
+﻿@model BlogManagement.Models.ShowCategoryPostVM
+
+@{
+    ViewData["Title"] = "ShowPostById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="page-wrapper">
+                <div class="blog-title-area">
+                    <span class="color-green"><a href="" title="">Gardening</a></span>
+
+                    <h3> @Html.DisplayFor(model => model.Title)</h3>
+
+                    <div class="blog-meta big-meta">
+                        <small><a href="garden-single.html" title=""> @Html.DisplayFor(model => model.CreatedAt)</a></small>
+                        <small><a href="blog-author.html" title="">by Admin</a></small>
+                        <small><a href="#" title=""><i class="fa fa-eye"></i> 2344</a></small>
+                    </div><!-- end meta -->
+
+                    <div class="post-sharing">
+                        <ul class="list-inline">
+                            <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                            <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                            <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div><!-- end post-sharing -->
+                </div><!-- end title -->
+
+                <div class="single-post-media">
+                    <img src="@Html.DisplayFor(model => model.ImagePath)" alt="" class="img-fluid">
+                </div><!-- end media -->
+
+                <div class="blog-content">
+                    <div class="row">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div><!-- end content -->
+                <li class="list-inline pull-right"><h4><b>Total Ranking</b></h4><input type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" data-readonly value="@Html.DisplayFor(model => model.AvgVote)" /></li>
+
+                <div class="blog-title-area">
+                    <div class="tag-cloud-single">
+                        <span>Tags</span>
+                        <small><a href="#" title="">lifestyle</a></small>
+                        <small><a href="#" title="">colorful</a></small>
+                        <small><a href="#" title="">trending</a></small>
+                        <small><a href="#" title="">another tag</a></small>
+                    </div><!-- end meta -->
+
+                    <div class="post-sharing">
+                        <ul class="list-inline">
+                            <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                            <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                            <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    <hr/>
+                        
+
+                    </div><!-- end post-sharing -->
+
+
+
+
+
+                </div><!-- end page-wrapper -->
+            </div><!-- end col -->
+
+    </div><!-- end row -->
+    <div class="container">
+        <div class="container bootdey">
+            <div class="col-md-12 bootstrap snippets">
+                <div class="panel">
+                    <div class="panel-body">
+                        <form asp-action="Create" asp-controller="PostComment" >
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" name="Id" asp-for="Id" />
+                            <div class="form-group">
+                                <label class="control-label">Comment</label>
+                                <input name="Name" class="form-control" />
+                                <span asp-validation-for="Content" class="text-danger"></span>
+                            </div>
+                            <h4><label class="mr-sm-2" for="inlineFormCustomSelect">Vote For The Article</label></h4>
+                            <div class="form-row align-items-center">
+                                <div class="col-auto my-1">
+                                    <select class="custom-select mr-sm-2" name="inlineFormCustomSelect" id="inlineFormCustomSelect">
+                                        <option selected value="0">Choose Point</option>
+                                        <option value="1">One Point</option>
+                                        <option value="2">Two Point</option>
+                                        <option value="3">Three Point</option>
+                                        <option value="4">Four Point</option>
+                                        <option value="5">Five Point</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="mar-top clearfix">
+                                <div class="form-group">
+                                    <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Share</button>
+                                </div>
+                        </form>
+                        @*<button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Share</button>*@
+                        <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
+                        <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
+                        <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-comment">
+                <div class="panel-body">
+                    @foreach (var item in Model.PostComments)
+                    {
+                        @if (item.PostCommentsChild.Count() == 0)
+                        {
+                            <div class="media-block">
+                                <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="@item.Users.ImagePath"></a>
+                                <div class="media-body">
+                                    <div class="mar-btm">
+                                        <a href="#" class="btn-link text-semibold media-heading box-inline">@item.Users.Firstname @item.Users.Middlename</a>
+                                        <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - @item.TimeCmt days ago</p>
+                                        @if (item.TotalVotes != null)
+                                        {
+                                            <li class="list-inline pull-right"><input type="hidden" class="rating" data-filled="fa fa-star" data-empty="fa fa-star-o" data-readonly value="@item.TotalVotes" /></li>
+
+                                        }
+
+                                    </div>
+                                    <p>@item.Content</p>
+                                    <div class="pad-ver">
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+                                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                        </div>
+                                        <a  class="nav-item dropdown-toggle ml-2"  id="navbarDropdownMenuLink" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comment</a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in nav-item"
+                                             aria-labelledby="navbarDropdownMenuLink">
+                                            <form asp-action="Create" asp-controller="PostComment">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <input type="hidden" name="Id" asp-for="Id" />
+                                                <input type="hidden" name="IdCmtParent" asp-for="@item.Id" />
+                                                <div class="form-group">
+                                                    <label class="control-label">Comment</label>
+                                                    <input name="Name" class="form-control" />
+                                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                                </div>
+                                                <div class="mar-top clearfix">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Share</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                            </div>
+                        }
+
+
+                        else
+                        {
+                            <div class="media-block">
+                                <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="@item.Users.ImagePath"></a>
+                                <div class="media-body">
+                                    <div class="mar-btm">
+                                        <a href="#" class="btn-link text-semibold media-heading box-inline">@item.Users.Firstname @item.Users.Middlename</a>
+                                        <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>  - @item.TimeCmt days ago</p>
+                                        @if (item.TotalVotes != null)
+                                        {
+                                            <li class="list-inline pull-right"><input type="hidden" class="rating" data-filled="fa fa-star" data-empty="fa fa-star-o" data-readonly value="@item.TotalVotes" /></li>
+
+                                        }
+
+                                    </div>
+                                    <p>@item.Content</p>
+                                    <div class="pad-ver">
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+                                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                        </div>
+                                        <a class="nav-item dropdown-toggle ml-2" id="navbarDropdownMenuLink" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comment</a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in nav-item"
+                                             aria-labelledby="navbarDropdownMenuLink">
+                                            <form asp-action="Create" asp-controller="PostComment">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <input type="hidden" name="Id" asp-for="Id" />
+                                                <input type="hidden" name="IdCmtParent" asp-for="@item.Id" />
+                                                <div class="form-group">
+                                                    <label class="control-label">Comment</label>
+                                                    <input name="Name" class="form-control" />
+                                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                                </div>
+                                                <div class="mar-top clearfix">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Share</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    @foreach(var itemchild in item.PostCommentsChild)
+                                    {
+                                        <!-- Comments -->
+                                    <div>
+                                        <div class="media-block">
+                                            <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="@itemchild.Users.ImagePath"></a>
+                                            <div class="media-body">
+                                                <div class="mar-btm">
+                                                    <a href="#" class="btn-link text-semibold media-heading box-inline">@itemchild.Users.Firstname @itemchild.Users.Middlename</a>
+                                                    <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - @item.TimeCmt days ago</p>
+                                                    @if (itemchild.TotalVotes != null)
+                                                    {
+                                                        <li class="list-inline pull-right"><input type="hidden" class="rating" data-filled="fa fa-star" data-empty="fa fa-star-o" data-readonly value="@item.TotalVotes" /></li>
+
+                                                    }
+
+                                                </div>
+                                                <p>@itemchild.Content</p>
+                                                <div class="pad-ver">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i class="fa fa-thumbs-up"></i> You Like it</a>
+                                                        <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                                    </div>
+                                                    <a class="nav-item dropdown-toggle ml-2" id="navbarDropdownMenuLink" role="button"
+                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comment</a>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                    }
+                                   
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                </div>
+            </div>
+        </div>
+</div>

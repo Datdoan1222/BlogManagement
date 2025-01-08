@@ -1,0 +1,44 @@
+﻿@model BlogManagement.Models.ShowCategoryPostVM
+
+
+
+<div class="navbar navbar-collapse justify-content-md-center  ">
+
+    <ul class="navbar-nav">
+                 <li class="nav-item active ">
+                    <a class="nav-link " href="~/">Home</a>
+                </li>
+        @foreach (ShowAllChildCategoryVM item in Model.CategoryChilds)
+        {
+
+                @if (item.CategoryChild.Count() == 0)
+                {
+                <li class="nav-item">
+                    <a class="nav-link color-black-hover" asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a>
+                </li>
+                 }
+                else
+                {
+
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="@item.Id" 
+                    id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @item.Title
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                @foreach (var itemchild in item.CategoryChild)
+                {
+                 <a class="dropdown-item" asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="@item.Id" >
+                    @item.Title
+                 </a>
+                <a class="dropdown-item" asp-action="ShowPostCategoryById" asp-controller="Home" asp-route-id="@itemchild.Id">@itemchild.Title</a>
+                }
+                </div>
+                </li>
+                }
+
+        }
+    </ul>
+</div>
+
